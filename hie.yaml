@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:KaleiS"
+
+    - path: "app/Main.hs"
+      component: "KaleiS:exe:KaleiS"
+
+    - path: "test"
+      component: "KaleiS:test:KaleiS-test"
