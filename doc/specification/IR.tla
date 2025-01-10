@@ -1,32 +1,43 @@
 ------------------------ MODULE IR ------------------------
 \* IR is responsible to generate runtime datastructure that
-\* present interfaces correspond to input AST.
-EXTENDS Interfaces
+\* represent interfaces correspond to input AST.
+EXTENDS Naturals, Defines, Sequences
 
-CONSTANTS NULL, AST_idl
+CONSTANTS NULL
 VARIABLES ir
 
+IDL            == INSTANCE IDL WITH NULL <- NULL
+AST            == INSTANCE AST WITH NULL <- NULL
+InnerRepresent == INSTANCE InnerRepresent WITH NULL <- NULL
 
 TypeInvariant == ir = [ ast |-> NULL, interfaces |-> NULL ]
 
 Init == TypeInvariant
 
-Transform(ast) ==
+Prepare(ast) ==
+  /\ AST!IsAST(ast)
   /\ ir.ast = NULL
   /\ ir.interfaces = NULL
   /\ ir' = [ir EXCEPT !.ast = ast]
 
-Transformed ==
+Transforming ==
   /\ ir.ast # NULL
   /\ ir.interfaces = NULL
-  /\ ir' = [ir EXCEPT !.interfaces = Interface[ir.ast]]
+  /\ ir' = [ir EXCEPT
+            !.interfaces =
+              [ i \in 1..AST!NumOfInterfaceInAST(ir.ast) |->
+                  InnerRepresent!Interface[IDL!GetInterfaceDef(AST!GetInterfaceInAST(ir.ast, i))]
+                ]
+            ]
 
-Clean ==
+Transformed ==
   /\ ir.ast # NULL
   /\ ir.interfaces # NULL
-  /\ ir' = [ir EXCEPT !.ast = NULL, !.interfaces = NULL]
+  /\ UNCHANGED <<ir>>
 
-Next == \E a \in AST_idl: Transform(a) \/ Transformed \/ CLean
+Next ==
+  \E a \in { AST!AST[<<IDL!InterfaceIDL[n]>>] : n \in 0..CARDINALITY_LIMIT }:
+    Prepare(a) \/ Transforming \/ Transformed
 
 Spec == Init /\ [][Next]_<<ir>>
 ===========================================================
