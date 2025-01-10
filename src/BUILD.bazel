@@ -1,0 +1,4 @@
+cc_library(
+    name = "library",
+    deps = ["//src/parser:parser"],
+)

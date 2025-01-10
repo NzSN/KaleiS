@@ -1,5 +1,20 @@
+filegroup(
+    name = "kaleis_api",
+    srcs = ["kaleis_api.h", "kaleis_api.cc"],
+)
+
 
 cc_binary(
     name = "kaleis",
-    srcs = ["kaleis.cc"]
+    srcs = ["kaleis.cc", ":kaleis_api"],
+)
+
+cc_test(
+    name = "kaleis_api_unittest",
+    srcs = ["kaleis_unittest.cc", ":kaleis_api"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@tree_sitter//:tree_sitter",
+        "@tree-sitter-kaleis//:tree-sitter-kaleis",
+        ]
 )

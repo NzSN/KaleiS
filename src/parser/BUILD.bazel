@@ -1,0 +1,14 @@
+
+
+cc_library(
+    name = "parser",
+    srcs = ["parser.h", "parser.cc",
+            "ast_base.h", "ast_base.cc",
+            "ast.h", "ast.cc"],
+    deps = [
+        "@tree_sitter//:tree_sitter",
+        "@tree-sitter-kaleis//:tree-sitter-kaleis",
+        "//src/base:base",
+    ],
+    visibility = ["//src:__pkg__"],
+)
