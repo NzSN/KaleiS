@@ -1,0 +1,6 @@
+MODULE.bazel.lock
+bazel-KaleiS
+bazel-bin
+bazel-out
+bazel-testlogs
+doc/specification/states/*
