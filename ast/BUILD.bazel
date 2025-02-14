@@ -9,5 +9,7 @@ cc_library(
 cc_test(
     name = "ast_generator_unittest",
     srcs = ["ast_generator_unittest.cc"],
-    deps = [":ast_generator"],
+    deps = [":ast_generator",
+            "@googletest//:gtest_main",
+            "@rapidcheck//:rapidcheck"],
 )

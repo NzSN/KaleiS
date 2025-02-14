@@ -19,4 +19,4 @@ git_override(
 )
 
 kaleis_ext = use_extension("@kaleis//:bazel/extensions.bzl", "ext")
-use_repo(kaleis_ext,  "tree_sitter")
+use_repo(kaleis_ext, "tree_sitter", "rapidcheck")

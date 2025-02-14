@@ -3,15 +3,15 @@
 #include "gtest/gtest.h"
 
 #include <tree_sitter/api.h>
-#include "bindings/c/tree-sitter-kaleis.h"
+#include "bindings/c/tree-sitter-typescript.h"
 
 namespace Kaleis::Api {
 
-TEST(Test, Basic) {
+TEST(KaleisApi, Basic) {
   TSParser *parser = ts_parser_new();
-  ts_parser_set_language(parser, tree_sitter_kaleis());
+  ts_parser_set_language(parser, tree_sitter_typescript());
 
-  const char *source_code = "Plus(n :: Nat) :: Nat { return n + 1; }";
+  const char *source_code = "function main() {}";
   TSTree *tree = ts_parser_parse_string(parser, NULL, source_code, strlen(source_code));
 
   ts_parser_delete(parser);
