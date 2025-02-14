@@ -1,9 +1,16 @@
 
+filegroup(
+    name = "ast",
+    srcs = ["ast_base.h"],
+    visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "ast_generator",
     hdrs = ["ast_generator.h"],
-    srcs = ["ast_generator.cc"],
-    deps = ["@json//:json"]
+    srcs = ["ast_generator.cc", ":ast"],
+    deps = ["@json//:json",
+            "@tree_sitter//:tree_sitter"]
 )
 
 cc_test(

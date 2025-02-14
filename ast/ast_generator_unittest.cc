@@ -19,7 +19,6 @@ RC_GTEST_FIXTURE_PROP(ASTGeneratorTester, JSONTransform, ()) {
   std::string source_json =
     "[{ \"type\": \"declaration\" }, { \"type\": \"statement\" }]";
 
-
   const auto ast = trans(source_json);
   RC_ASSERT(ast.has_value());
 }
