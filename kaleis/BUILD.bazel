@@ -15,6 +15,6 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@tree_sitter//:tree_sitter",
-        "@tree-sitter-kaleis//:tree-sitter-kaleis",
+        "@tree-sitter-typescript//:tree-sitter-typescript",
         ]
 )

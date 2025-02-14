@@ -7,7 +7,7 @@ cc_library(
             "ast.h", "ast.cc"],
     deps = [
         "@tree_sitter//:tree_sitter",
-        "@tree-sitter-kaleis//:tree-sitter-kaleis",
+        "@tree-sitter-typescript//:tree-sitter-typescript",
         "//src/base:base",
     ],
     visibility = ["//src:__pkg__"],

@@ -3,7 +3,7 @@
 #include "src/base/assert.h"
 
 #include "tree_sitter/api.h"
-#include "bindings/c/tree-sitter-kaleis.h"
+#include "bindings/c/tree-sitter-typescript.h"
 
 namespace Kaleis {
 namespace Parser {
@@ -14,7 +14,7 @@ Parser::Parser(): parser(ts_parser_new()) {
     "Failed to create tree-sitter parser");
 
   [[maybe_unused]]
-  auto rv = ts_parser_set_language(this->parser, tree_sitter_kaleis());
+  auto rv = ts_parser_set_language(this->parser, tree_sitter_typescript());
   assert(rv);
 }
 
