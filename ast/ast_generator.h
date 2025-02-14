@@ -1,6 +1,7 @@
 #ifndef KALEIS_AST_AST_GENERATOR_H_
 #define KALEIS_AST_AST_GENERATOR_H_
 
+
 namespace Kaleis {
 namespace AST {
 

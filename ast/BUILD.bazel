@@ -1,0 +1,13 @@
+
+cc_library(
+    name = "ast_generator",
+    hdrs = ["ast_generator.h"],
+    srcs = ["ast_generator.cc"],
+    deps = ["@json//:json"]
+)
+
+cc_test(
+    name = "ast_generator_unittest",
+    srcs = ["ast_generator_unittest.cc"],
+    deps = [":ast_generator"],
+)
