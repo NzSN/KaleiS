@@ -11,5 +11,7 @@ cc_test(
     srcs = ["ast_generator_unittest.cc"],
     deps = [":ast_generator",
             "@googletest//:gtest_main",
-            "@rapidcheck//:rapidcheck"],
+            "@rapidcheck//:rapidcheck",
+            "@tree_sitter//:tree_sitter",
+            "@tree-sitter-typescript//:tree-sitter-typescript"]
 )
