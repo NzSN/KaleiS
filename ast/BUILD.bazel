@@ -1,7 +1,7 @@
 
 filegroup(
     name = "ast",
-    srcs = ["ast_base.h"],
+    srcs = ["ast_base.h", "ast_base.cc"],
     visibility = ["//visibility:public"],
 )
 

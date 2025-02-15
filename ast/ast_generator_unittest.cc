@@ -14,12 +14,16 @@ struct ASTGeneratorTester: public ::testing::Test {
   ASTGenerator g;
 };
 
-
-RC_GTEST_FIXTURE_PROP(ASTGeneratorTester, JSONTransform, ()) {
+RC_GTEST_FIXTURE_PROP(ASTGeneratorTester, LeafOnlyTransform, ()) {
   std::string source_json =
     "[{ \"type\": \"declaration\" }, { \"type\": \"statement\" }]";
 
   const auto ast = trans(source_json);
+
+  /*
+  ** class Declaration : public Leaf {};
+  ** class Statement   : public Leaf {};
+   */
   RC_ASSERT(ast.has_value());
 }
 
