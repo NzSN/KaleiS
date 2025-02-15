@@ -61,9 +61,14 @@ std::optional<TSNode> PreorderIterate(TSTreeCursor* cursor) {
 template<Context T>
 [[nodiscard]]
 AST<T>::MaybeASTUniquePtr AST<T>::BuildAST(TSNode node, T& ctx) {
+  std::optional<TSNode> current{node};
   TSTreeCursor cursor = ts_tree_cursor_new(node);
 
+  while (current.has_value()) {
+    /* Build Current AST node */
 
+    current = PreorderIterate(&cursor);
+  }
 }
 
 } // AST
