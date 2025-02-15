@@ -35,10 +35,35 @@ std::string Leaf::GetLiteral() {
   }
 }
 
-AST::AST(json& j): node_{}, source_{j.dump()} {}
+template<Context T>
+AST<T>::AST(json& j): node_{}, source_{j.dump()} {}
 
-void AST::SetupRootNode(std::unique_ptr<Node>&& root) {
-  node_ = std::move(root);
+namespace {
+
+std::optional<TSNode> PreorderIterate(TSTreeCursor* cursor) {
+  if (!ts_tree_cursor_goto_first_child(cursor)) {
+    if (!ts_tree_cursor_goto_next_sibling(cursor)) {
+      bool has_parent = false;
+      while ((has_parent = ts_tree_cursor_goto_parent(cursor)) &&
+             !ts_tree_cursor_goto_next_sibling(cursor)) {}
+
+      if (!has_parent) {
+        return std::nullopt;
+      }
+    }
+  }
+
+  return ts_tree_cursor_current_node(cursor);
+}
+
+}
+
+template<Context T>
+[[nodiscard]]
+AST<T>::MaybeASTUniquePtr AST<T>::BuildAST(TSNode node, T& ctx) {
+  TSTreeCursor cursor = ts_tree_cursor_new(node);
+
+
 }
 
 } // AST

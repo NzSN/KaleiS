@@ -1,6 +1,7 @@
 #ifndef KALEIS_AST_AST_BASE_H_
 #define KALEIS_AST_AST_BASE_H_
 
+#include <concepts>
 #include <string>
 
 #include "tree_sitter/api.h"
@@ -43,12 +44,23 @@ private:
   std::optional<std::string> literal_;
 };
 
+using MaybeNodeUniquePtr = std::optional<std::unique_ptr<Node>>;
+template<typename T>
+concept Context =
+  requires(T ctx, TSNode node) {
+    { ctx(node) } -> std::convertible_to<MaybeNodeUniquePtr>;
+  };
+
+template<Context T>
 class AST {
 public:
-  AST(nlohmann::json& json);
-protected:
-  void SetupRootNode(std::unique_ptr<Node>&& root);
+  using MaybeASTUniquePtr = std::optional<std::unique_ptr<AST>>;
+
+  [[nodiscard]]
+  static MaybeASTUniquePtr BuildAST(TSNode node, T& ctx);
 private:
+  AST(nlohmann::json& json);
+
   std::unique_ptr<Node> node_;
   std::string source_;
 };
