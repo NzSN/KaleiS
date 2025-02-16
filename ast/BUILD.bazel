@@ -10,7 +10,8 @@ cc_library(
     hdrs = ["ast_generator.h"],
     srcs = ["ast_generator.cc", ":ast"],
     deps = ["@json//:json",
-            "@tree_sitter//:tree_sitter"]
+            "@tree_sitter//:tree_sitter",
+            "//src/base:base"]
 )
 
 cc_test(

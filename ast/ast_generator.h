@@ -18,7 +18,6 @@ public:
 private:
   friend ASTGeneratorTester;
 
-  /*  */
   std::optional<std::string> TransJSONToAST(std::string json_source) const;
 };
 

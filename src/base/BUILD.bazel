@@ -1,6 +1,7 @@
 filegroup(
     name = "base_hdrs",
-    srcs = ["assert.h"],
+    srcs = ["assert.h",
+            "check.h"],
     visibility = ["//visibility:public"],
 )
 

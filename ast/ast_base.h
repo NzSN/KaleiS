@@ -1,25 +1,31 @@
 #ifndef KALEIS_AST_AST_BASE_H_
 #define KALEIS_AST_AST_BASE_H_
 
+#include <optional>
 #include <concepts>
 #include <string>
+#include <memory>
+#include <vector>
 
 #include "tree_sitter/api.h"
-#include "nlohmann/json.hpp"
 
 namespace Kaleis {
 namespace AST {
 
+struct ASTContext {
+  std::string source;
+};
+
 class Node {
 public:
-  Node(TSNode* node);
+  Node(TSNode node);
 protected:
-  const TSNode* node_;
+  const TSNode node_;
 };
 
 class InternalNode: public Node {
 public:
-  InternalNode(TSNode* node);
+  InternalNode(TSNode node);
 
   void push_back(std::unique_ptr<Node>&& node);
   void pop_back();
@@ -37,18 +43,18 @@ private:
 };
 class Leaf : public Node {
 public:
-  Leaf(TSNode* node, std::string& source);
+  Leaf(TSNode node, ASTContext& ctx);
   std::string GetLiteral();
 private:
-  std::string& source_;
+  ASTContext& ctx_;
   std::optional<std::string> literal_;
 };
 
 using MaybeNodeUniquePtr = std::optional<std::unique_ptr<Node>>;
 template<typename T>
 concept Context =
-  requires(T ctx, TSNode node) {
-    { ctx(node) } -> std::convertible_to<MaybeNodeUniquePtr>;
+  requires(T ctx, TSNode node, ASTContext& context) {
+    { ctx(node, context) } -> std::convertible_to<MaybeNodeUniquePtr>;
   };
 
 template<Context T>
@@ -57,12 +63,14 @@ public:
   using MaybeASTUniquePtr = std::optional<std::unique_ptr<AST>>;
 
   [[nodiscard]]
-  static MaybeASTUniquePtr BuildAST(TSNode node, T& ctx);
+  static MaybeASTUniquePtr BuildAST(std::string source, TSTree* node, T& ctx);
 private:
-  AST(nlohmann::json& json);
+  AST(std::string source);
 
   std::unique_ptr<Node> node_;
-  std::string source_;
+
+  ASTContext context_;
+  TSTree* tree_;
 };
 
 } // AST

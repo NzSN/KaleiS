@@ -21,8 +21,17 @@ RC_GTEST_FIXTURE_PROP(ASTGeneratorTester, LeafOnlyTransform, ()) {
   const auto ast = trans(source_json);
 
   /*
-  ** class Declaration : public Leaf {};
-  ** class Statement   : public Leaf {};
+   * Expected Generated AST Node in CPP Type:
+   *
+   * class Declaration : public
+   * class Statement   : public Leaf {};
+   *
+   * using CTOR = std::optional<std::unique_ptr<Node>>(TSNode, ASTContext&);
+   * std::map<std::string, std::function<CTOR> context = {
+   *   {"declaration", [](TSNode node, ASTContext& context) { ... } },
+   *   {"statement"  , [](TSNode node, ASTContext& context) { ... } }
+   * };
+   *
    */
   RC_ASSERT(ast.has_value());
 }

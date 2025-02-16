@@ -9,15 +9,20 @@ using json = nlohmann::json;
 namespace Kaleis {
 namespace AST {
 
-[[nodiscard]]
+namespace {
+
+std::string TransStep(const json& item) {
+
+}
+
+}
+
+
 std::optional<std::string>
 ASTGenerator::TransJSONToAST(std::string json_source) const {
   json obj = json::parse(json_source);
 
-  std::for_each(obj.cbegin(), obj.cend(),
-                [](const json& item) {
-                  std::cout << item.dump() << std::endl;
-                });
+  std::for_each(obj.cbegin(), obj.cend(), TransStep);
 
   return std::nullopt;
 }
