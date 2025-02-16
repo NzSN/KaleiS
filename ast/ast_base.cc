@@ -65,6 +65,7 @@ std::optional<TSNode> PreorderIterate(TSTreeCursor* cursor, TSNode root) {
 }
 
 template<typename T>
+[[nodiscard]]
 MaybeNodeUniquePtr MapTSNodeToNode(TSNode node, AST<T>* ast, T& ctx) {
 
   TSNode root = node;
