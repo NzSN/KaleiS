@@ -8,7 +8,9 @@
 #include <vector>
 
 #include "tree_sitter/api.h"
+
 #include "src/base/check.h"
+#include "src/base/assert.h"
 
 namespace Kaleis {
 namespace AST {
@@ -83,6 +85,7 @@ public:
 
   [[nodiscard]]
   static MaybeASTUniquePtr BuildAST(std::string source, TSTree* tree, T& ctx) {
+
     std::unique_ptr<AST<T>> ast = std::make_unique<AST<T>>(source);
 
     TSNode root_ts_node = ts_tree_root_node(tree);
@@ -124,6 +127,8 @@ private:
 
   [[nodiscard]]
   static MaybeNodeUniquePtr MapTSNodeToNode(TSNode node, AST<T>* ast, T& ctx) {
+    ASSERT(ast != nullptr);
+
     TSNode root = node;
     std::optional<TSNode> current = root;
     TSTreeCursor cursor = ts_tree_cursor_new(node);
