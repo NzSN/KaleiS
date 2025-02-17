@@ -7,7 +7,7 @@ filegroup(
 
 cc_library(
     name = "ast_generator",
-    hdrs = ["ast_generator.h"],
+    hdrs = ["ast_generator.h", "ast_base.h"],
     srcs = ["ast_generator.cc", ":ast"],
     deps = ["@json//:json",
             "@tree_sitter//:tree_sitter",
@@ -17,6 +17,16 @@ cc_library(
 cc_test(
     name = "ast_generator_unittest",
     srcs = ["ast_generator_unittest.cc"],
+    deps = [":ast_generator",
+            "@googletest//:gtest_main",
+            "@rapidcheck//:rapidcheck",
+            "@tree_sitter//:tree_sitter",
+            "@tree-sitter-typescript//:tree-sitter-typescript"]
+)
+
+cc_test(
+    name = "ast_base_unittest",
+    srcs = ["ast_base_unittest.cc",],
     deps = [":ast_generator",
             "@googletest//:gtest_main",
             "@rapidcheck//:rapidcheck",
